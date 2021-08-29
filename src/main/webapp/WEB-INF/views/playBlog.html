@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="../../css/music.css">
+<title>W3.CSS Template</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Amatic+SC">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open Sans">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+    body, html {
+        height: 100%
+    }
+
+    body, h1, h2, h3, h4, h5, h6, li {
+        font-family: "Amatic SC", sans-serif
+    }
+
+    .menu {
+        display: none
+    }
+
+    .bgimg {
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-image: url("/img/galaxy.jpg");
+        min-height: 90%;
+    }
+</style>
+<body>
+
+<!--Navbar (sit on top)-->
+<div class="w3-top w3-hide-small" >
+    <div class="w3-bar w3-xlarge w3-black w3-opacity w3-hover-opacity-off" id="myNavbar">
+        <!-- Brand/logo -->
+        <a class="w3-bar-item w3-button" href="#"><img th:each="lp,loop:${listPerson}" th:src="${lp.imagePerson}"  style="width:40px;"></a>
+        <a href="#" class="w3-bar-item w3-button">HOME</a>
+        <a href="#menu" class="w3-bar-item w3-button">MENU Music</a>
+        <a href="#about" class="w3-bar-item w3-button">ABOUT</a>
+        <a href="#myMap" class="w3-bar-item w3-button">CONTACT</a>
+    </div>
+</div>
+
+
+<!-- Header with image -->
+<header class="bgimg w3-display-container w3-grayscale-min" id="home">
+    <div class="w3-display-bottomleft w3-padding">
+        <span class="w3-tag w3-xlarge">Open from 10am to 12pm</span>
+    </div>
+    <div class="w3-display-middle w3-center">
+        <span class="w3-text-white w3-hide-small" style="font-size:100px">BLOG<br>MUSIC TRICK</span>
+        <span class="w3-text-white w3-hide-large w3-hide-medium"
+              style="font-size:60px"><b>thin<br>CRUST PIZZA</b></span>
+        <p><a href="#menu" class="w3-button w3-xxlarge w3-black">Let me see the menu</a></p>
+    </div>
+</header>
+
+
+<!-- About Container -->
+<div class="w3-container w3-padding-64 w3-red w3-grayscale w3-xlarge" id="about">
+    <div class="w3-content">
+        <div class="container-audio">
+            <div class="colum1">
+                <div class="row"></div>
+            </div>
+            <div class="colum1">
+                <div class="row"></div>
+            </div>
+            <div class="colum1">
+                <div class="row"></div>
+            </div>
+            <div class="colum1">
+                <div class="row"></div>
+            </div>
+            <div class="colum1">
+                <div class="row"></div>
+            </div>
+            <div class="colum1">
+                <div class="row"></div>
+            </div>
+            <div class="colum1">
+                <div class="row"></div>
+            </div>
+            <div class="colum1">
+                <div class="row"></div>
+            </div>
+            <div class="colum1">
+                <div class="row"></div>
+            </div>
+            <div class="colum1">
+                <div class="row"></div>
+            </div>
+            <div class="colum1">
+                <div class="row"></div>
+            </div>
+            <div class="colum1">
+                <div class="row"></div>
+            </div>
+            <div class="colum1">
+                <div class="row"></div>
+            </div>
+            <div class="colum1">
+                <div class="row"></div>
+            </div>
+            <div class="colum1">
+                <div class="row"></div>
+            </div>
+            <div class="colum1">
+                <div class="row"></div>
+            </div>
+            <div class="colum1">
+                <div class="row"></div>
+            </div>
+            <div class="colum1">
+                <div class="row"></div>
+            </div>
+            <div class="colum1">
+                <div class="row"></div>
+            </div>
+            <div class="colum1">
+                <div class="row"></div>
+            </div>
+            <div class="colum1">
+                <div class="row"></div>
+            </div>
+            <div class="colum1">
+                <div class="row"></div>
+            </div>
+            <div class="colum1">
+                <div class="row"></div>
+            </div>
+        </div>
+
+        <form th:object="${list}" method="post" novalidate="novalidate" enctype="multipart/form-data">
+            <table class="table" id="list">
+                <div class="container-audio">
+                    <audio controls loop autoplay>
+                        <source th:src="*{fileMusic}" type="audio/ogg">
+                    </audio>
+                </div>
+
+            </table>
+        </form>
+        <hr>
+        <h1><b>People Comment</b></h1>
+        <tr th:object="${list}">
+            <td>
+                <img th:src="*{fileImage}" width="125px" height="125px" class="w3-padding-16">
+            </td>
+            <td>
+                <ul type="circle">
+                    <li th:text="*{tenBaiHat}"></li>
+                    <li th:text="*{tenCaSy}"></li>
+                    <li th:text="*{tenNhacSy}"></li>
+                </ul>
+            </td>
+        </tr>
+        <br>
+        <br>
+        <div class="w3-justify" th:object="${list}">
+            <p class="w3-left">
+                <button class="w3-button w3-white w3-border" onclick="likeFunction(this)"><b>
+                    <i class="fa fa-thumbs-up"></i>Like</b></button>
+            </p>
+            <p class="w3-right">
+                <button class="w3-button w3-black" onclick="myFunction('demo1')" id="myBtn"><b>Comment  </b> <span
+                        class="w3-tag w3-white">1</span></button>
+            </p>
+            <p class="w3-clear"></p>
+
+            <!--            binh luan nguoi dung-->
+            <div class="w3-row w3-margin-bottom" id="demo1" style="display:none">
+                <hr>
+                <div class="w3-col l2 m3">
+                    <img src="/w3images/avatar_smoke.jpg" style="width:90px;">
+                </div>
+                <div class="w3-col l10 m9">
+                    <h4>George <span class="w3-opacity w3-medium">May 3, 2015, 6:32 PM</span></h4>
+                    <p>Great blog post! Following</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Menu Container -->
+<div class="w3-container w3-black w3-padding-64 w3-xxlarge" id="menu">
+    <div class="w3-content">
+        <h1 class="w3-center w3-jumbo" style="margin-bottom:64px">MENU MUSIC</h1>
+        <div class="w3-row w3-center w3-border w3-border-dark-grey">
+            <a href="javascript:void(0)" onclick="openMenu(event, 'Remix');" id="myLink">
+                <div class="w3-col s4 tablink w3-padding-large w3-hover-red">Remix</div>
+            </a>
+            <a href="javascript:void(0)" onclick="openMenu(event, 'Pop');">
+                <div class="w3-col s4 tablink w3-padding-large w3-hover-red">Pop</div>
+            </a>
+            <a href="javascript:void(0)" onclick="openMenu(event, 'Us');">
+                <div class="w3-col s4 tablink w3-padding-large w3-hover-red">Us</div>
+            </a>
+        </div>
+
+        <div id="Remix" class="w3-container menu w3-padding-32 w3-white">
+            <tr th:each="remix,loop:${listRemix}">
+                <h1><b th:text="${remix.tenBaiHat}"></b> <a class="w3-right w3-tag w3-dark-grey w3-round"
+                                                            th:href="@{/playBlog/{id}(id = ${remix.id})}">Play</a>
+                </h1>
+                <p class="w3-text-grey" th:text="${remix.tenCaSy}"></p>
+                <hr>
+            </tr>
+
+        </div>
+
+        <div id="Pop" class="w3-container menu w3-padding-32 w3-white">
+            <tr th:each="pop,loop:${listPop}">
+                <h1><b th:text="${pop.tenBaiHat}"></b> <span class="w3-tag w3-red w3-round">HOT</span> <a
+                        class="w3-right w3-tag w3-dark-grey w3-round"
+                        th:href="@{/playBlog/{id}(id = ${pop.id})}">Play</a></h1>
+                <p class="w3-text-grey" th:text="${pop.tenCaSy}"></p>
+                <hr>
+            </tr>
+        </div>
+
+        <div id="Us" class="w3-container menu w3-padding-32 w3-white">
+            <tr th:each="us,loop:${listUs}">
+                <h1><b th:text="${us.tenBaiHat}"></b> <span class="w3-tag w3-red w3-round">HOT</span><a
+                        class="w3-right w3-tag w3-dark-grey w3-round"
+                        th:href="@{/playBlog/{id}(id = ${us.id})}">Play</a></h1>
+                <p class="w3-text-grey" th:text="${us.tenCaSy}"></p>
+                <hr>
+            </tr>
+
+        </div>
+        <br>
+    </div>
+</div>
+
+
+<!-- Footer -->
+<footer class="w3-center w3-black w3-padding-48 w3-xxlarge">
+    <p>Xin chào <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank"
+                   class="w3-hover-text-green">w3.css</a></p>
+</footer>
+
+<script>
+    // Tabbed Menu
+    function openMenu(evt, menuName) {
+        var i, x, tablinks;
+        x = document.getElementsByClassName("menu");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablink");
+        for (i = 0; i < x.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" w3-red", "");
+        }
+        document.getElementById(menuName).style.display = "block";
+        evt.currentTarget.firstElementChild.className += " w3-red";
+    }
+
+    document.getElementById("myLink").click();
+
+
+    // Toggle between hiding and showing blog replies/comments
+    document.getElementById("myBtn").click();
+
+    function myFunction(id) {
+        var x = document.getElementById(id);
+        if (x.className.indexOf("w3-show") == -1) {
+            x.className += " w3-show";
+        } else {
+            x.className = x.className.replace(" w3-show", "");
+        }
+    }
+
+    function likeFunction(x) {
+        x.style.fontWeight = "bold";
+        x.innerHTML = "✓ Liked";
+    }
+</script>
+
+</body>
+</html>

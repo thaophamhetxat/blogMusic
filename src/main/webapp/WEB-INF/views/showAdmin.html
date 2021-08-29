@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+
+
+    <h2>Show Customer</h2>
+    <a href="/create" class="btn btn-success">Create</a>
+    <br>
+    <br>
+    <form action="/findByName" method="get">
+        <input type="text" class="form-control" placeholder="search" name="findName">
+        <input type="text" hidden name="action" value="findName">
+        <button type="submit" class="btn btn-success">Find</button>
+    </form>
+
+    <br>
+    <br>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>STT</th>
+            <th>Name Music</th>
+            <th>Name Singer</th>
+            <th>Name Musician</th>
+            <th>File Music</th>
+            <th>File Image</th>
+            <th>Genre</th>
+            <th>Comment</th>
+            <th>Detail</th>
+            <th>Play</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="blog,loop:${list}">
+            <td th:text="${blog.id}"></td>
+            <td th:text="${blog.tenBaiHat}"></td>
+            <td th:text="${blog.tenCaSy}"></td>
+            <td th:text="${blog.tenNhacSy}"></td>
+            <td th:text="${blog.fileMusic}"></td>
+            <td><img th:src="${blog.fileImage}" width="100px" height="100px"></td>
+            <td th:text="${blog.theLoai}"></td>
+            <td th:text="${blog.binhLuan}"></td>
+            <td><a th:href="@{/detail/{id}(id = ${blog.id})}" class="btn btn-warning">Detail</a></td>
+            <td><a th:href="@{/showBlog/{id}(id = ${blog.id})}" class="btn btn-warning">Play</a></td>
+            <td><a th:href="@{/edit/{id}(id = ${blog.id})}" class="btn btn-warning">Edit</a></td>
+            <td><a th:href="@{/delete/{id}(id = ${blog.id})}" class="btn btn-danger">Delete</a></td>
+        </tr>
+        </tbody>
+    </table>
+<!--    phân trang-->
+    <a href="/showAdmin?pageNumber=1" class="btn btn-warning">1</a>
+    <a href="/showAdmin?pageNumber=2" class="btn btn-warning">2</a>
+    <a href="/showAdmin?pageNumber=3" class="btn btn-warning">3</a>
+</div>
+
+</body>
+</html>
