@@ -1,9 +1,6 @@
 package moduls;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Date;
 @Entity
 public class Person {
@@ -16,13 +13,17 @@ public class Person {
     int phone;
     Date date;
     String sex;
-    String imagePerson;
+    String avatar;
+
+    @ManyToOne
+    private Role role;
 
     public Person() {
     }
 
-    public Person(int id, String userName, String passWord,
-                  String email, int phone, Date date, String sex, String imagePerson) {
+
+    public Person(int id, String userName, String passWord, String email,
+                  int phone, Date date, String sex, String avatar, Role role) {
         this.id = id;
         this.userName = userName;
         this.passWord = passWord;
@@ -30,7 +31,16 @@ public class Person {
         this.phone = phone;
         this.date = date;
         this.sex = sex;
-        this.imagePerson = imagePerson;
+        this.avatar = avatar;
+        this.role = role;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public int getId() {
@@ -89,11 +99,11 @@ public class Person {
         this.sex = sex;
     }
 
-    public String getImagePerson() {
-        return imagePerson;
+    public String getAvatar() {
+        return avatar;
     }
 
-    public void setImagePerson(String imagePerson) {
-        this.imagePerson = imagePerson;
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }

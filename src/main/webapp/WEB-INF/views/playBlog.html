@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <link rel="stylesheet" href="../../css/music.css">
 <title>W3.CSS Template</title>
-<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Amatic+SC">
@@ -28,21 +28,44 @@
     .bgimg {
         background-repeat: no-repeat;
         background-size: cover;
-        background-image: url("/img/galaxy.jpg");
+        background-image: url("/image/galaxy.jpg");
         min-height: 90%;
     }
 </style>
 <body>
 
-<!--Navbar (sit on top)-->
-<div class="w3-top w3-hide-small" >
+Navbar (sit on top)
+<div class="w3-top w3-hide-small">
     <div class="w3-bar w3-xlarge w3-black w3-opacity w3-hover-opacity-off" id="myNavbar">
         <!-- Brand/logo -->
-        <a class="w3-bar-item w3-button" href="#"><img th:each="lp,loop:${listPerson}" th:src="${lp.imagePerson}"  style="width:40px;"></a>
+        <a class="w3-bar-item w3-button" href="#">X</a>
         <a href="#" class="w3-bar-item w3-button">HOME</a>
         <a href="#menu" class="w3-bar-item w3-button">MENU Music</a>
         <a href="#about" class="w3-bar-item w3-button">ABOUT</a>
-        <a href="#myMap" class="w3-bar-item w3-button">CONTACT</a>
+        <a href="#about" class="w3-bar-item w3-button">Yeu thich</a>
+        <!--        <li class="nav-item dropdown">-->
+        <!--            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">-->
+        <!--                Ngôn ngữ-->
+        <!--            </a>-->
+        <!--            <div class="dropdown-menu">-->
+        <!--                <a class="dropdown-item" href="#">Việt Nam (vn)</a>-->
+        <!--                <a class="dropdown-item" href="#">English (en)</a>-->
+        <!--            </div>-->
+        <!--        </li>-->
+        <!--        &lt;!&ndash; Navbar links &ndash;&gt;-->
+        <!--        <div class="collapse navbar-collapse" id="collapsibleNavbar">-->
+        <!--            <ul class="navbar-nav">-->
+        <!--                <li class="nav-item">-->
+        <!--                    <a class="nav-link" href="#">Link</a>-->
+        <!--                </li>-->
+        <!--                <li class="nav-item">-->
+        <!--                    <a class="nav-link" href="#">Link</a>-->
+        <!--                </li>-->
+        <!--                <li class="nav-item">-->
+        <!--                    <a class="nav-link" href="#">Link</a>-->
+        <!--                </li>-->
+        <!--            </ul>-->
+        <!--        </div>-->
     </div>
 </div>
 
@@ -205,8 +228,11 @@
 
         <div id="Remix" class="w3-container menu w3-padding-32 w3-white">
             <tr th:each="remix,loop:${listRemix}">
-                <h1><b th:text="${remix.tenBaiHat}"></b> <a class="w3-right w3-tag w3-dark-grey w3-round"
-                                                            th:href="@{/playBlog/{id}(id = ${remix.id})}">Play</a>
+                <h1><b th:text="${remix.tenBaiHat}"></b> <a onclick=" return confirm('da them va muc yeu thich')"
+                                                            th:href="@{/add/__${remix.id}__(action='listRemix')}"
+                                                            class="w3-right w3-tag w3-dark-grey w3-round">Add To Favourite</a>
+                                                          <a class="w3-right w3-tag w3-dark-grey w3-round"
+                                                             th:href="@{/playBlog/{id}(id = ${remix.id})}">Play</a>
                 </h1>
                 <p class="w3-text-grey" th:text="${remix.tenCaSy}"></p>
                 <hr>

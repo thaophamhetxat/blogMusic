@@ -1,69 +1,319 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Bootstrap Example</title>
-    <meta charset="utf-8">
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <style>
+        /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+        .row.content {
+            height: 550px
+        }
+
+        /* Set gray background color and 100% height */
+        .sidenav {
+            background-color: #f1f1f1;
+            height: 100%;
+        }
+
+        /* On small screens, set height to 'auto' for the grid */
+        @media screen and (max-width: 767px) {
+            .row.content {
+                height: auto;
+            }
+        }
+    </style>
+    <script type="text/javascript">
+        function createBlog() {
+            //lấy dữ liệu
+            let title = $('#title').val();
+            let content = $('#content').val();
+            let date = $('#date').val();
+            let views = $('#views').val();
+            let likes = $('#likes').val();
+            let dislike = $('#dislike').val();
+            let person = $('#person').val();
+            let newBlog = {
+                title: title,
+                content: content,
+                date: date,
+                views: views,
+                likes: likes,
+                dislike: dislike,
+                person: {
+                    id: person
+                }
+            };
+
+
+            console.log(newBlog);
+
+            //gọi ajax
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                type: "Post",
+                data: JSON.stringify(newBlog),
+
+                //tên api
+                url: "/api/blogs",
+                //sử lý sau khi thanh công
+                success: successHandler
+
+            });
+            //chặn sự kiện mặc định của thẻ
+            event.preventDefault();
+        }
+
+        function successHandler() {
+            document.getElementById('create').style.display = 'none';
+            $.ajax({
+                type: "GET",
+                url: "/create",
+                success: function (data) {
+                    console.log(data)
+                    //hiển thị danh sách
+                    let content = '    <tr>\n' +
+                        '        <td>Tiêu đề</td>\n' +
+                        '        <td>Nội dung</td>\n' +
+                        '        <td>Ngày viết</td>\n' +
+                        '        <td>Lượt xem</td>\n' +
+                        '        <td>Thích</td>\n' +
+                        '        <td>Không thích</td>\n' +
+                        '        <td>Person</td>\n' +
+                        '    </tr>';
+                    for (let i = 0; i < data.length; i++) {
+                        content += getBlog(data[i]);
+                    }
+                    document.getElementById('blogList').innerHTML = content;
+                }
+            });
+        }
+
+        function getBlog(bl) {
+            return `<tr>
+                        <td >${bl.title}</td>
+                        <td >${bl.content}</td>
+                        <td >${bl.date}</td>
+                        <td>${bl.views}</td>
+                        <td>${bl.likes}</td>
+                        <td>${bl.dislike}</td>
+                        <td >${bl.person.username}</td>` +
+                `<td><a href="/edit/${bl.id}" class="btn btn-warning">Edit</a></td>
+                <td><button onclick="deleteBlog(${bl.id})">Delete</button></td>
+                </tr>`;
+        }
+    </script>
 </head>
 <body>
 
-<div class="container">
+<div class="container-fluid">
+    <div class="row content">
+        <div class="col-sm-3 sidenav hidden-xs">
+            <h2>HOME ADMIN</h2>
+            <ul class="nav nav-pills nav-stacked">
+                <li class="active"><a href="#section1">Dashboard</a></li>
+                <li><a href="/create" class="btn btn-success">Create</a></li>
+
+                <!--                 ajax button create -->
+                <li class="navbar-nav-item">
+                    <p>
+                        <button onclick="document.getElementById('create').style.display='block'"
+                                class="w3-button w3-black">
+                            Create User/Admin
+                        </button>
+                    </p>
+                </li>
+                <!--                end button create-->
+
+                <li><a th:href="@{/logout}">logout</a></li>
+                <!-- Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                        Ngôn Ngữ
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="?lang=en">English</a>
+                        <a class="dropdown-item" href="?lang=vi">Việt Nam</a>
+                    </div>
+                </li>
+            </ul>
+            <br>
+        </div>
+        <br>
+
+        <div class="col-sm-9">
+            <div class="well">
+                <h4>Dashboard</h4>
+                <p>Some text..</p>
+            </div>
+            <div class="row">
+                <!--                information-->
+                <div class="col-sm-3">
+                    <div class="well">
+                        <h4>Users</h4>
+                        <p>1 Million</p>
+                    </div>
+                </div>
+
+                <div class="col-sm-3">
+                    <div class="well">
+                        <h4>Admin</h4>
+                        <p>100 Million</p>
+                    </div>
+                </div>
+
+                <div class="col-sm-3">
+                    <div class="well">
+                        <h4>Blogs</h4>
+                        <p>10 Million</p>
+                    </div>
+                </div>
+
+                <div class="col-sm-3">
+                    <div class="well">
+                        <h4>Bounce</h4>
+                        <p>30%</p>
+                    </div>
+                </div>
+            </div>
+            <!-- end infor-->
 
 
-    <h2>Show Customer</h2>
-    <a href="/create" class="btn btn-success">Create</a>
-    <br>
-    <br>
-    <form action="/findByName" method="get">
-        <input type="text" class="form-control" placeholder="search" name="findName">
-        <input type="text" hidden name="action" value="findName">
-        <button type="submit" class="btn btn-success">Find</button>
-    </form>
+            <!--create crud-->
+<!--                        <div id="create" class="w3-modal">-->
+<!--                            <div class="w3-modal-content w3-animate-zoom">-->
+<!--                                <div class="w3-container w3-black w3-display-container">-->
+<!--                        <span onclick="document.getElementById('create').style.display='none'"-->
+<!--                              class="w3-button w3-display-topright w3-large">x</span>-->
+<!--                                    <h1>CREATE</h1>-->
+<!--                                </div>-->
+<!--                                <form action="/create" method="post">-->
+<!--                                    <table class="table">-->
+<!--                                        <tr>-->
+<!--                                            <th th:text="#{Title}"></th>-->
+<!--                                            <td><input name="title"></td>-->
+<!--                                        </tr>-->
+<!--                                        <tr>-->
+<!--                                            <th th:text="#{Content}"></th>-->
+<!--                                            <td><input name="content"></td>-->
+<!--                                        </tr>-->
+<!--                                        <tr>-->
+<!--                                            <th th:text="#{Date}"></th>-->
+<!--                                            <td><input type="date" name="date"></td>-->
+<!--                                        </tr>-->
+<!--                                        <tr>-->
+<!--                                            <th th:text="#{Views}"></th>-->
+<!--                                            <td><input name="views" value="0"></td>-->
+<!--                                        </tr>-->
+<!--                                        <tr>-->
+<!--                                            <th th:text="#{Likes}"></th>-->
+<!--                                            <td><input name="likes" value="0"></td>-->
+<!--                                        </tr>-->
+<!--                                        <tr>-->
+<!--                                            <th th:text="#{Dislike}"></th>-->
+<!--                                            <td><input name="dislike" value="0"></td>-->
+<!--                                        </tr>-->
+<!--                                    </table>-->
+<!--                                    <button type="submit" class="btn btn-success" th:text="#{Create}"></button>-->
+<!--                                    <a href="/admin" class="btn btn-success" th:text="#{Quit}"></a>-->
+<!--                                </form>-->
+<!--                            </div>-->
+<!--                        </div>-->
 
-    <br>
-    <br>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>STT</th>
-            <th>Name Music</th>
-            <th>Name Singer</th>
-            <th>Name Musician</th>
-            <th>File Music</th>
-            <th>File Image</th>
-            <th>Genre</th>
-            <th>Comment</th>
-            <th>Detail</th>
-            <th>Play</th>
-            <th>Edit</th>
-            <th>Delete</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="blog,loop:${list}">
-            <td th:text="${blog.id}"></td>
-            <td th:text="${blog.tenBaiHat}"></td>
-            <td th:text="${blog.tenCaSy}"></td>
-            <td th:text="${blog.tenNhacSy}"></td>
-            <td th:text="${blog.fileMusic}"></td>
-            <td><img th:src="${blog.fileImage}" width="100px" height="100px"></td>
-            <td th:text="${blog.theLoai}"></td>
-            <td th:text="${blog.binhLuan}"></td>
-            <td><a th:href="@{/detail/{id}(id = ${blog.id})}" class="btn btn-warning">Detail</a></td>
-            <td><a th:href="@{/showBlog/{id}(id = ${blog.id})}" class="btn btn-warning">Play</a></td>
-            <td><a th:href="@{/edit/{id}(id = ${blog.id})}" class="btn btn-warning">Edit</a></td>
-            <td><a th:href="@{/delete/{id}(id = ${blog.id})}" class="btn btn-danger">Delete</a></td>
-        </tr>
-        </tbody>
-    </table>
-<!--    phân trang-->
-    <a href="/showAdmin?pageNumber=1" class="btn btn-warning">1</a>
-    <a href="/showAdmin?pageNumber=2" class="btn btn-warning">2</a>
-    <a href="/showAdmin?pageNumber=3" class="btn btn-warning">3</a>
+
+            <!--            show crud-->
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="well">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Name Music</th>
+                                <th>Name Singer</th>
+                                <th>Name Musician</th>
+                                <th>File Music</th>
+                                <th>File Image</th>
+                                <th>Genre</th>
+                                <th>Views</th>
+                                <th>Detail</th>
+                                <th>Play</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="blog,loop:${list}">
+                                <td th:text="${loop.count}"></td>
+                                <td th:text="${blog.tenBaiHat}"></td>
+                                <td th:text="${blog.tenCaSy}"></td>
+                                <td th:text="${blog.tenNhacSy}"></td>
+                                <td th:text="${blog.fileMusic}"></td>
+                                <td><img th:src="${blog.fileImage}" width="100px" height="100px"></td>
+                                <td th:text="${blog.theLoai.nameTheLoai}"></td>
+                                <td th:text="${blog.views}"></td>
+                                <td><a th:href="@{/detail/{id}(id = ${blog.id})}" class="btn btn-warning">Detail</a>
+                                </td>
+                                <td><a th:href="@{/playBlog/{id}(id = ${blog.id})}" class="btn btn-warning">Play</a>
+                                </td>
+                                <td><a th:href="@{/edit/{id}(id = ${blog.id})}" class="btn btn-warning">Edit</a></td>
+                                <td><a th:href="@{/delete/{id}(id = ${blog.id})}" class="btn btn-danger">Delete</a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <!--    phân trang-->
+                        <div style="text-align: center">
+                            <span><a th:if="${list.hasPrevious()}" th:href="@{/showAdmin (page = ${list.number - 1})}"><<<<</a></span>
+                            <span th:text="${list.number + 1}"></span>/<span th:text="${list.totalPages}"></span>
+                            <span><a th:if="${list.hasNext()}"
+                                     th:href="@{/showAdmin (page = ${list.number + 1})}">>>>></a></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--           end crud -->
+
+
+            <div class="row">
+
+
+
+                <div class="col-sm-8">
+                    <div class="well">
+                        <p>Text</p>
+                    </div>
+                </div>
+
+
+
+
+
+                <div class="col-sm-4">
+                    <div class="well">
+                        <p>Text</p>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
 </div>
 
 </body>

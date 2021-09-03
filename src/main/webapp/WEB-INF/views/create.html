@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Bootstrap Example</title>
-    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -13,7 +13,7 @@
 
 <div class="container">
     <h2>Table Create Music</h2>
-    <form action="/create" method="post" th:object="${list}" enctype="multipart/form-data">
+    <form action="/create" method="post" th:object="${listTheLoai}" enctype="multipart/form-data">
             <table class="table">
                 <tr>
                     <td>Name Music:</td>
@@ -41,11 +41,14 @@
                 </tr>
                 <tr>
                     <td>Genre:</td>
-                    <td><input th:field="*{theLoai}"></td>
+                    <td><select th:field="*{theLoai}">
+                        <option th:each="tl: ${theLoaiList}" th:value="${tl.id}" th:text="${tl.nameTheLoai}"></option>
+                    </select>
+                    </td>
                 </tr>
                 <tr>
-                    <td>Comment:</td>
-                    <td><input th:field="*{binhLuan}"></td>
+                    <td>Views:</td>
+                    <td><input name="views" value="0"></td>
                 </tr>
         </table>
         <button type="submit" class="btn btn-success">Create Music</button>

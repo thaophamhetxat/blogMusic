@@ -14,23 +14,31 @@ public class BlogMusic {
     String fileMusic;
     String fileImage;
     int views;
+    int likes;
+    int dislike;
 
     @ManyToOne
     private TheLoai theLoai;
 
+    @ManyToOne
+    private Person person;
+
     public BlogMusic() {
     }
 
-    public BlogMusic(int id, String tenBaiHat, String tenCaSy,
-                     String tenNhacSy, String fileMusic, String fileImage, String theLoai, String binhLuan) {
+    public BlogMusic(int id, String tenBaiHat, String tenCaSy, String tenNhacSy, String fileMusic, String fileImage,
+                     int views, int likes, int dislike, TheLoai theLoai, Person person) {
         this.id = id;
         this.tenBaiHat = tenBaiHat;
         this.tenCaSy = tenCaSy;
         this.tenNhacSy = tenNhacSy;
         this.fileMusic = fileMusic;
         this.fileImage = fileImage;
+        this.views = views;
+        this.likes = likes;
+        this.dislike = dislike;
         this.theLoai = theLoai;
-        this.binhLuan = binhLuan;
+        this.person = person;
     }
 
     public int getId() {
@@ -81,19 +89,43 @@ public class BlogMusic {
         this.fileImage = fileImage;
     }
 
-    public String getTheLoai() {
+    public int getViews() {
+        return views;
+    }
+
+    public void setViews(int views) {
+        this.views = views;
+    }
+
+    public TheLoai getTheLoai() {
         return theLoai;
     }
 
-    public void setTheLoai(String theLoai) {
+    public void setTheLoai(TheLoai theLoai) {
         this.theLoai = theLoai;
     }
 
-    public String getBinhLuan() {
-        return binhLuan;
+    public int getLikes() {
+        return likes;
     }
 
-    public void setBinhLuan(String binhLuan) {
-        this.binhLuan = binhLuan;
+    public void setLikes(int likes) {
+        this.likes = likes;
+    }
+
+    public int getDislike() {
+        return dislike;
+    }
+
+    public void setDislike(int dislike) {
+        this.dislike = dislike;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
     }
 }

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Bootstrap Example</title>
-    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -23,7 +23,7 @@
         .carousel-inner img {
             width: 100%; /* Set width to 100% */
             margin: auto;
-            min-height:200px;
+            min-height: 200px;
         }
 
         /* Hide the carousel text when the screen is less than 600 pixels wide */
@@ -48,13 +48,14 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
+                <li class="active">
+                    <a href="/blog">Home</a></li>
                 <li><a href="#">About</a></li>
                 <li><a href="#">Projects</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><a href="/favourite-add">favourite</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                <li><a href="/"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
             </ul>
         </div>
     </div>
@@ -90,8 +91,6 @@
     </div>
 
 
-
-
     <!-- Left and right controls -->
     <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
         <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
@@ -104,34 +103,70 @@
 </div>
 
 <div class="container text-center">
-<br>
+    <br>
 
     <div class="row">
-
         <div class="col-sm-8">
             <h3 style="background: burlywood">TOP MUSIC</h3>
             <div class="col-sm-4" th:each="blog,loop:${list}">
                 <a th:href="@{/playBlog/{id}(id = ${blog.id})}" target="_blank">
-                    <img th:src="${blog.fileImage}"  height="270px" width="220px" alt="Image">
-                    <p class="small text-uppercase mb-0" th:text="${blog.theLoai}"></p>
+                    <img th:src="${blog.fileImage}" height="270px" width="220px" alt="Image">
+                    <p class="small text-uppercase mb-0" th:text="${blog.theLoai.nameTheLoai}"></p>
                     <h2 class="h3 mb-4" th:text="${blog.tenBaiHat}"></h2>
                 </a>
             </div>
         </div>
 
-
-
-
+<!--        top view-->
         <div class="col-sm-4">
-            <div class="well">
-                <p>Some text..</p>
-            </div>
-            <div class="well">
-                <p>Some text..</p>
-            </div>
+            <h3>Top Views</h3>
+<!--            <div class="well">-->
+<!--                <tr th:each="v,loop:${listSortViews}">-->
+<!--                    <td th:text="${loop.count}"></td>-->
+<!--                    <td th:text="${v.tenBaiHat}"></td>-->
+<!--                </tr>-->
+<!--            </div>-->
+        </div>
+
+
+    </div>
+
+
+    <div class="col-sm-12">
+        <h3 style="background: burlywood">Remix</h3>
+        <div class="col-sm-4" th:each="remix,loop:${listRemix}">
+            <a th:href="@{/playBlog/{id}(id = ${remix.id})}" target="_blank">
+                <img th:src="${remix.fileImage}" height="270px" width="220px" alt="Image">
+                <p class="small text-uppercase mb-0" th:text="${remix.theLoai.nameTheLoai}"></p>
+                <h4 class="h3 mb-4" th:text="${remix.tenBaiHat}"></h4>
+            </a>
         </div>
     </div>
-</div><br>
+    <div class="col-sm-12">
+        <h3 style="background: burlywood">Us</h3>
+        <div class="col-sm-4" th:each="us,loop:${listUs}">
+            <a th:href="@{/playBlog/{id}(id = ${us.id})}" target="_blank">
+                <img th:src="${us.fileImage}" height="270px" width="220px" alt="Image">
+                <p class="small text-uppercase mb-0" th:text="${us.theLoai.nameTheLoai}"></p>
+                <h4 class="h3 mb-4" th:text="${us.tenBaiHat}"></h4>
+            </a>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <h3 style="background: burlywood">Pop</h3>
+        <div class="col-sm-4" th:each="pop,loop:${listPop}">
+            <a th:href="@{/playBlog/{id}(id = ${pop.id})}" target="_blank">
+                <img th:src="${pop.fileImage}" height="270px" width="220px" alt="Image">
+                <p class="small text-uppercase mb-0" th:text="${pop.theLoai.nameTheLoai}"></p>
+                <h4 class="h3 mb-4" th:text="${pop.tenBaiHat}"></h4>
+            </a>
+        </div>
+    </div>
+
+
+
+</div>
+<br>
 
 
 <!--footer-->

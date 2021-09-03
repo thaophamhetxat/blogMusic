@@ -10,6 +10,8 @@ import org.springframework.data.domain.Pageable;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.ArrayList;
+import java.util.Optional;
+
 @Transactional
 public class BlogMusicService implements IBlogMusicService {
     @Autowired
@@ -25,6 +27,11 @@ public class BlogMusicService implements IBlogMusicService {
     @Override
     public BlogMusic findById(int id) {
         return iBlogMusicRepo.findById(id).get();
+    }
+
+    @Override
+    public Optional<BlogMusic> findByIdo(int id) {
+        return iBlogMusicRepo.findById(id);
     }
 
     @Override
@@ -52,30 +59,65 @@ public class BlogMusicService implements IBlogMusicService {
         iBlogMusicRepo.save(blogMusic);
     }
 
+
+
+
+
+    @Override
+    public void views(int id) {
+        Optional<BlogMusic> view = iBlogMusicRepo.findById(id);
+        view.get().setViews(view.get().getViews() + 1);
+        iBlogMusicRepo.save(view.get());
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//    @Override
+//    public ArrayList<BlogMusic> SortMaxViews() {
+//
+//        String queryStr = "select b from BlogMusic b   order by b.id desc ";
+//        TypedQuery<BlogMusic> query = entityManager.createQuery(queryStr, BlogMusic.class);
+//        query.setFirstResult(1);
+//        query.setMaxResults(10);
+//        return (ArrayList<BlogMusic>) query.getResultList();
+//    }
+
+
+
     @Override
     public ArrayList<BlogMusic> findAllByNameRemix() {
-        String queryStr = "SELECT u FROM BlogMusic u WHERE u.theLoai = :theLoai ";
-        TypedQuery<BlogMusic> query = entityManager.createQuery(queryStr, BlogMusic.class).setParameter("theLoai","remix");
-        query.setFirstResult(1);
-        query.setMaxResults(4);
+        String queryStr = "select b from BlogMusic b  where b.theLoai.nameTheLoai like '%remix%'";
+        TypedQuery<BlogMusic> query = entityManager.createQuery(queryStr, BlogMusic.class);
         return (ArrayList<BlogMusic>) query.getResultList();
     }
 
+
     @Override
     public ArrayList<BlogMusic> findAllByNamePop() {
-        String queryStr = "SELECT u FROM BlogMusic u WHERE u.theLoai = :theLoai";
-        TypedQuery<BlogMusic> query = entityManager.createQuery(queryStr, BlogMusic.class).setParameter("theLoai","pop");
-        query.setFirstResult(1);
-        query.setMaxResults(4);
+        String queryStr = "select b from BlogMusic b  where b.theLoai.nameTheLoai like '%pop%'";
+        TypedQuery<BlogMusic> query = entityManager.createQuery(queryStr, BlogMusic.class);
         return (ArrayList<BlogMusic>) query.getResultList();
     }
 
     @Override
     public ArrayList<BlogMusic> findAllByNameUs() {
-        String queryStr = "SELECT u FROM BlogMusic u WHERE u.theLoai = :theLoai";
-        TypedQuery<BlogMusic> query = entityManager.createQuery(queryStr, BlogMusic.class).setParameter("theLoai","us");
-        query.setFirstResult(1);
-        query.setMaxResults(4);
+        String queryStr = "select b from BlogMusic b  where b.theLoai.nameTheLoai like '%us%'";
+        TypedQuery<BlogMusic> query = entityManager.createQuery(queryStr, BlogMusic.class);
         return (ArrayList<BlogMusic>) query.getResultList();
     }
 
